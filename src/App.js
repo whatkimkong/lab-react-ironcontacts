@@ -28,10 +28,31 @@ class App extends Component {
     this.setState({contactsDisplayed: clonedContacts})
   }
 
+  sortByName = () => {
+    const clonedContacts = [...this.state.contactsDisplayed];
+    clonedContacts.sort((a, b) => {
+      return a.name >= b.name ? 1:-1
+    });
+    this.setState({contactsDisplayed: clonedContacts})
+  }
+
+  sortByPopularity = () => {
+    const clonedContacts = [...this.state.contactsDisplayed];
+    clonedContacts.sort((a, b) => {
+      return a.popularity <= b.popularity ? 1:-1
+    });
+    this.setState({contactsDisplayed: clonedContacts})
+  }
+
   render() {
   return (
     <Container className="justify-content-center">
+    
         <h2 >IronContacts</h2>
+        <Button onClick={this.addRandomContact}>Add a New Contact</Button>
+        <Button onClick={this.sortByName}>Sort By Name</Button>
+        <Button onClick={this.sortByPopularity}>Sort By Popularity</Button>
+        <hr/>
         <table >
           <thead>
             <tr>
@@ -52,8 +73,7 @@ class App extends Component {
             })}
           </tbody>
         </table>
-        <Button onClick={this.addRandomContact}>Add a New Contact</Button>
-      </Container>
+    </Container>
   )
   }
 }
