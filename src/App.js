@@ -1,8 +1,9 @@
 import './App.css';
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import contacts from "./contacts.json"; 
 import { Button, Container } from 'react-bootstrap';
 
+/*
 const tableStyle = {
   border: 'none',
   width: '40%',
@@ -11,13 +12,21 @@ const tableStyle = {
   textAlign: 'left',
   padding: '5px',
 }
+*/
 
 class App extends Component {
 
   state = {
-    first5Contacts: contacts.slice(0, 5),
+    contactsDisplayed: contacts.slice(0, 5),
   }
  
+  addRandomContact = () => {
+    const randomIndex = Math.floor(Math.random()*contacts.length);
+    const randomContact = contacts[randomIndex];
+    const clonedContacts = [...this.state.contactsDisplayed];
+    clonedContacts.push(randomContact)
+    this.setState({contactsDisplayed: clonedContacts})
+  }
 
   render() {
   return (
@@ -32,18 +41,18 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.first5Contacts.map((eachContact) => {
+            {this.state.contactsDisplayed.map((eachContact) => {
               return (
             <tr>
-              <td><img alt="contactImage" src={eachContact.pictureUrl} width="40vw"/></td>
-              <td>{eachContact.name}</td>
-              <td>{eachContact.popularity}</td>
+              <td key={eachContact}><img alt="contactImage" src={eachContact.pictureUrl} width="40vw"/></td>
+              <td key={eachContact.name}>{eachContact.name}</td>
+              <td key={eachContact.popularity}>{eachContact.popularity}</td>
             </tr>
               )
             })}
           </tbody>
         </table>
-        <Button>Add a New Contact</Button>
+        <Button onClick={this.addRandomContact}>Add a New Contact</Button>
       </Container>
   )
   }
