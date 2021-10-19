@@ -1,5 +1,7 @@
 import './App.css';
-import contacts from "./contacts.json";
+import React, {Component, Fragment} from 'react';
+import contacts from "./contacts.json"; 
+import { Button, Container } from 'react-bootstrap';
 
 const tableStyle = {
   border: 'none',
@@ -10,19 +12,18 @@ const tableStyle = {
   padding: '5px',
 }
 
-function App() {
+class App extends Component {
 
   state = {
-    first5Contacts: contacts.splice(0, 4),
+    first5Contacts: contacts.slice(0, 5),
   }
+ 
 
+  render() {
   return (
-    <><div className="App">
-      <header className="App-header">
-        <h2>IronContacts</h2>
-      </header>
-    </div><div>
-        <table style={tableStyle}>
+    <Container className="justify-content-center">
+        <h2 >IronContacts</h2>
+        <table >
           <thead>
             <tr>
               <th scope="col">Picture</th>
@@ -34,22 +35,23 @@ function App() {
             {this.state.first5Contacts.map((eachContact) => {
               return (
             <tr>
+              <td><img alt="contactImage" src={eachContact.pictureUrl} width="40vw"/></td>
               <td>{eachContact.name}</td>
-              <td></td>
               <td>{eachContact.popularity}</td>
             </tr>
               )
             })}
           </tbody>
         </table>
-      </div></>
-  );
+        <Button>Add a New Contact</Button>
+      </Container>
+  )
+  }
 }
 
 // ?? the picture how?
 // <img src=`{eachContact.pictureUrl}`/>
 
-
-// why the fragment?
-
 export default App;
+
+// why the fragment? // because it doesnt like double divs!!!
